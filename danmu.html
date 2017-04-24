@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+   <!-- <meta name="viewport" content="width=device-width, initial-scale=1">-->
+    <title>弹幕小demo</title>
+    <style type="text/css">
+        input[type="button"], input[type="submit"], input[type="reset"] {
+             -webkit-appearance: none;
+
+        }
+        textarea {  -webkit-appearance: none;}
+        .danmu{
+            width:400px;
+            margin:0 auto;
+            height:auto;
+            background-color:#f5f5f5;
+            border:1px solid #ebebeb;
+            border-radius:5px;
+            border-shadow:0 0 0 8px;
+            -webkit-border-shadow:0 0 0 8px;
+            position:relative;
+            padding:25px 0px;
+            overflow:hidden;
+        }
+        .screen{
+            width:100%;
+            height:300px;
+        }
+
+        .danmu_mess div{
+            font-size: 22px;
+            line-height: 36px;
+            font-weight: 500;
+            color: #fff;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        .send .txt{
+            width:340px;
+            height:34px;
+            line-height:34px;
+            border:none;
+            border:1px solid #ebebeb;
+            border-radius:8px;
+            font-size:14px;
+            color:#525252;
+            outline:none;
+            margin:10px 20px;
+            padding-left:20px;
+        }
+        .send p{
+            width:90%;
+            margin:0 auto;
+        }
+        .send p button{
+            width: 45%;
+            border: 1px solid #ebebeb;
+            border-radius: 4px;
+            height: 35px;
+            line-height: 35px;
+            background-color: #ddd;
+            text-align: center;
+            font-size: 14px;
+            font-family: "微软雅黑";
+            outline: none;
+            color: #525252;
+        }
+        .send p button:first-child{
+            margin-right:10%;
+        }
+        .send p button.active{
+            background-color:#ff5d3b;
+            color:#fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="danmu">
+         <!--<video class="screen" controls autobuffer loop height=100%
+                src="http://tv.sohu.com/upload/static/share/share_play.html#786067_5028144_0_2_1"
+                type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
+         </video>-->
+        <object width=400 height=300 >
+            <embed class="screen" width=400 height=300 wmode="Transparent" allowfullscreen="true" allowscriptaccess="always" quality="high" src="http://share.vrs.sohu.com/786067/v.swf&topBar=1&autoplay=false&plid=5028144&pub_catecode=0&from=page" type="application/x-shockwave-flash"/></embed>
+        </object>
+        <div class="danmu_mess"></div>
+        <div class="send">
+            <input class="txt" type="text" placeholder="请输入弹幕"/>
+            <p><button class="active sub">发送弹幕</button><button class="del">屏蔽弹幕</button></p>
+        </div>
+    </div>
+    <!--兼容主流浏览器视频播放-->
+    <!--<script src="http://html5media.googlecode.com/svn/trunk/src/html5media.min.js"></script>-->
+    <script src="https://cdn.wilddog.com/js/client/current/wilddog.js"></script>
+    <script src="https://cdn.wilddog.com/js/vendor/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            var ref = new Wilddog("https://lily183.wilddogio.com");
+            var arr = [];
+            //把数据提交到野狗云
+            $(".sub").click(function() {
+                var text = $(".txt").val();
+                ref.child('message').push(text);
+                $(".txt").val('');
+            });
+            //响应按键点击事件
+            $(".txt").keypress(function(event) {
+                if (event.keyCode == "13") {
+                    $(".sub").trigger('click');
+                }
+            });
+            //响应按键清除事件
+            $(".del").click(function() {
+                //删除弹幕
+                /*ref.remove();*/
+                arr = [];
+                $('.danmu_mess').empty();
+            });
+            //监听云端数据变更，云端数据变化，弹幕框里数据也跟着变化。
+            ref.child('message').on('child_added', function(snapshot) {
+                var text = snapshot.val();
+                arr.push(text);
+                var textObj = $("<div class=\"dm_message\"></div>");
+                textObj.text(text);
+                $(".danmu_mess").append(textObj);
+                moveObj(textObj);
+            });
+
+            ref.on('child_removed', function() {
+                arr = [];
+                $('.danmu_mess').empty();
+            });
+            //按照时间规则显示弹幕内容。
+            var topMin = $('.screen').offset().top+35;
+            var topMax = topMin + $('.screen').height()-70;
+            var _top = topMin;
+
+            var moveObj = function(obj) {
+                var _left = $('.screen').width() - obj.width();
+                _top = _top + 50;
+                if (_top > (topMax - 50)) {
+                    _top = topMin;
+                }
+                obj.css({
+                    left: _left,
+                    top: _top,
+                    color: getRandomColor()
+                });
+                var time = 20000 + 10000 * Math.random();
+                obj.animate({
+                    left: "-" + _left + "px"
+                }, time, function() {
+                    obj.remove();
+                });
+            }
+
+            var getRandomColor = function() {
+                return '#' + (function(h) {
+                            //h是自我执行函数后面括号里传过来的随机十六进制数
+                            //new Array(7 - h.length).join("0")因为h可能少于六位，要在前面添0
+                             return new Array(7 - h.length).join("0") + h
+                        })((Math.random() * 0x1000000 << 0).toString(16))
+            }
+
+            var getAndRun = function() {
+                if (arr.length > 0) {
+                    var n = Math.floor(Math.random() * arr.length + 1) - 1;
+                    var textObj = $("<div>" + arr[n] + "</div>");
+                    $(".danmu_mess").append(textObj);
+                    moveObj(textObj);
+                }
+
+                setTimeout(getAndRun, 3000);
+            }
+
+            jQuery.fx.interval = 50;
+            getAndRun();
+
+            $("button").click(function(){
+                $(this).addClass("active").siblings().removeClass("active");
+            });
+        });
+    </script>
+</body>
+</html>
