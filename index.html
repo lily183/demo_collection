@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>my demos collections</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+
+    <style>
+
+        body {
+            padding-top: 50px;
+            padding-bottom: 40px;
+            color: #5a5a5a;
+        }
+
+        /* 轮播广告 */
+
+        .carousel {
+            height: 500px;
+            margin-bottom: 60px;
+        }
+
+        .carousel .item {
+            height: 500px;
+            background-color: #000;
+        }
+
+        .carousel .item img {
+            width: 100%;
+        }
+
+        .carousel-caption {
+            z-index: 10;
+        }
+
+        .carousel-caption p {
+            margin-bottom: 20px;
+            font-size: 20px;
+            line-height: 1.8;
+        }
+
+        /* 简介 */
+
+        .summary {
+            padding-right: 15px;
+            padding-left: 15px;
+        }
+
+        .summary .col-md-4 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* 特性 */
+
+        .feature-divider {
+            margin: 40px 0;
+        }
+
+        .feature {
+            padding: 30px 0;
+        }
+
+        .feature-heading {
+            font-size: 50px;
+            color: #2a6496;
+        }
+
+        .feature-heading .text-muted {
+            font-size: 28px;
+        }
+
+        /* 响应式布局 */
+
+        @media (max-width: 768px) {
+
+            .summary {
+                padding-right: 3px;
+                padding-left: 3px;
+            }
+
+            .carousel {
+                height: 300px;
+                margin-bottom: 30px;
+            }
+
+            .carousel .item {
+                height: 300px;
+            }
+
+            .carousel img {
+                min-height: 300px;
+            }
+
+            .carousel-caption p {
+                font-size: 16px;
+                line-height: 1.4;
+            }
+
+            .feature-heading {
+                font-size: 34px;
+            }
+
+            .feature-heading .text-muted {
+                font-size: 22px;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .feature-heading {
+                margin-top: 120px;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+<!-- 顶部导航 -->
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation" id="menu-nav">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">切换导航</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">我的作品集</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#ad-carousel">项目代码</a></li>
+                <li><a href="#" data-toggle="modal" data-target="#about-modal">关于</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<!-- 广告轮播 -->
+<div id="ad-carousel" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+        <li data-target="#ad-carousel" data-slide-to="0" class="active"></li>
+        <li data-target="#ad-carousel" data-slide-to="1"></li>
+        <li data-target="#ad-carousel" data-slide-to="2"></li>
+        <li data-target="#ad-carousel" data-slide-to="3"></li>
+        <li data-target="#ad-carousel" data-slide-to="4"></li>
+    </ol>
+    <div class="carousel-inner">
+        <div class="item active">
+            <img src="images/h5.jpg" alt="1 slide">
+
+            <div class="container">
+                <div class="carousel-caption">
+                    <h1>58nf官网</h1>
+
+                    <p>这是我在工作中参与的公司官网</p>
+
+                    <p><a class="btn btn-lg btn-primary" href="http://www.58yicun.com/"
+                          role="button" target="_blank">点我进入详情页</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="item">
+            <img src="images/css3.jpg" alt="2 slide">
+
+            <div class="container">
+                <div class="carousel-caption">
+                    <h1>弹幕demo</h1>
+
+                    <p>这是一个含有video视频标签的弹幕小demo</p>
+
+                    <p><a class="btn btn-lg btn-primary" href="danmu.html" target="_blank"
+                          role="button">点我进入详情页</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="item">
+            <img src="images/jq.jpg" alt="3 slide">
+
+            <div class="container">
+                <div class="carousel-caption">
+                    <h1>老虎机小游戏</h1>
+
+                    <p>这是一个用jquery写的老虎机小游戏</p>
+
+                    <p><a class="btn btn-lg btn-primary" href="slotgame.html" target="_blank"
+                          role="button">点我进入详情页</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="item">
+            <img src="images/vue.png" alt="4 slide">
+
+            <div class="container">
+                <div class="carousel-caption">
+                    <h1>vue.js</h1>
+
+                    <p>这是使用vue-cli和vue-router写的一个组件库小项目</p>
+
+                    <p><a class="btn btn-lg btn-primary" href="https://github.com/lily183/enter_vue" target="_blank"
+                          role="button">点我进入详情页</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="item">
+            <img src="images/ajax.jpg" alt="5 slide">
+
+            <div class="container">
+                <div class="carousel-caption">
+                    <h1>ajax</h1>
+
+                    <p>这是使用ajax技术请求json数据，然后进行解析的一个天气预报的小项目</p>
+
+                    <p><a class="btn btn-lg btn-primary" href="http://ie.microsoft.com/" target="_blank"
+                          role="button">点我进入详情页</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a class="left carousel-control" href="#ad-carousel" data-slide="prev"><span
+            class="glyphicon glyphicon-chevron-left"></span></a>
+    <a class="right carousel-control" href="#ad-carousel" data-slide="next"><span
+            class="glyphicon glyphicon-chevron-right"></span></a>
+</div>
+
+
+<!-- 主要内容 -->
+<div class="container summary">
+
+    <!-- 简介 -->
+    <div class="row" id="summary-container">
+        <div class="col-md-4">
+            <img class="img-circle" src="images/chrome-logo-small.jpg" alt="chrome">
+
+            <h2>联系方式</h2>
+
+            <p>姓名：张小兰<br/>邮箱：1477640644@qq.com</p>
+
+         </div>
+        <div class="col-md-4">
+            <img class="img-circle" src="images/firefox-logo-small.jpg" alt="firefox">
+
+            <h2>教育情况</h2>
+
+            <p>湖南师范大学本科<br/>通信工程专业</p>
+
+         </div>
+        <div class="col-md-4">
+            <img class="img-circle" src="images/safari-logo-small.jpg" alt="safari">
+
+            <h2>技能</h2>
+
+            <p>非常熟练使用html5 ,css3 ,js,jquery<br/>熟悉bootstrap vue.js等框架</p>
+
+         </div>
+    </div>
+
+    <!-- 特性 -->
+
+    <hr class="feature-divider">
+
+    <ul class="nav nav-tabs" role="tablist" id="feature-tab">
+        <li class="active"><a href="#tab-chrome" role="tab" data-toggle="tab">工作经验</a></li>
+        <li><a href="#tab-firefox" role="tab" data-toggle="tab">实习经验</a></li>
+
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane active" id="tab-chrome">
+            <div class="row feature">
+                <div class="col-md-7">
+
+                    <h2 class="feature-heading">58农服 <span
+                            class="text-muted">2016.11--至今</span></h2>
+
+                    <p class="lead">主要负责协助前端工程师把ui设计稿转化为html,css和JS等符合 W3C  标准的、
+                        兼容多种浏览器的前端代码。我有负责公司项目中一部分的移动端和pc端页面编写，以及一些
+                        页面的复用组件的编写和页面优化；其中有移动端页面使用rem和flex布局进行移动端页面的编写，能
+                        够兼容大部分手机；pc端官网主要是使用 html, css3实现页面效果，js 和jquery 实现页面动
+                        态功能，其中有的页面使用ajax调取数据；也有使用过bootstrap框架编写过后台页面，并且有
+                        会模块化开发和vue.js；  </div>
+                <div class="col-md-5">
+                    <img class="feature-image img-responsive" src="images/chrome-logo.jpg"
+                         alt="Chrome">
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane" id="tab-firefox">
+            <div class="row feature">
+                <div class="col-md-5">
+                    <img class="feature-image img-responsive" src="images/firefox-logo.jpg"
+                         alt="Firefox">
+                </div>
+                <div class="col-md-7">
+
+                    <h2 class="feature-heading">长沙极客营 <span class="text-muted">2016.7-2016.8</span>
+                    </h2>
+
+                    <p class="lead">4个人合作开发一个分为前台功能和后台功能的 完整实现的网站，前台主要是用户登录，商品展
+                        现，新闻留言功能和购买实现，后台分为用户
+                        管理，图片管理，订单管理，新闻管理，留言
+                        管理 五个模块，我主要负责前台前端页面实现，主要 使用 html,div+css ，实现静态页面， j 实现
+                        页面一 些动态效果，还有引入一些轮播插件；
+                        后台负责 新闻管理和留言管理两个模块，主要
+                        是使用mysql 数据库，javabean 和javadao, jsp
+                        ,和servlet 实现后台页面之间数据动态交互，和
+                        后台增删改查管理 功能实现模块
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    <!-- 关于 -->
+    <div class="modal fade" id="about-modal" tabindex="-1" role="dialog" aria-labelledby="modal-label"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
+                    <h4 class="modal-title" id="modal-label">关于</h4>
+                </div>
+                <div class="modal-body">
+                    <p> 这些是我平时自己学习然后写的一些demo，其中有各个技能的体现。</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">了解了</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <footer>
+        <p class="pull-right"><a href="#top">回到顶部</a></p>
+
+        <p>&copy; 2017/4/10 zhangxiaolan </p>
+    </footer>
+
+</div>
+
+<script src="js/jquery-1.11.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script>
+    $(function () {
+        $('#ad-carousel').carousel();
+        $('#menu-nav .navbar-collapse a').click(function (e) {
+            var href = $(this).attr('href');
+            var tabId = $(this).attr('data-tab');
+            if ('#' !== href) {
+                e.preventDefault();
+                $(document).scrollTop($(href).offset().top - 70);
+                if (tabId) {
+                    $('#feature-tab a[href=#' + tabId + ']').tab('show');
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>
