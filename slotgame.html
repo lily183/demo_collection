@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>js--老虎机小游戏</title>
+    <style type="text/css">
+        h1.title{
+            width:450px;
+            margin:0 auto;
+            height:35px;
+            line-height:35px;
+            font-size:18px;
+            font-family:"微软雅黑";
+            text-align:center;
+            font-weight:bold;
+            color:#525252;
+            background-image:-webkit-linear-gradient(360deg, #adadad, #afd9ee);
+            background-image:linear-gradient(360deg,#adadad, #afd9ee);
+            margin-top:50px;
+        }
+        .content{
+            width:450px;
+            margin:0 auto;
+            position:relative;
+        }
+        /*动画效果*/
+        @keyframes scroll{
+            0%{
+                background-position: 3px 0px;
+            }
+
+
+            50%{
+                background-position: 3px 300px;
+            }
+
+
+            100%{
+                background-position: 3px 600px;
+            }
+        }
+        .content .slot{
+            display: inline-block;
+            width: 100px;
+            margin-top: 20px;
+            height: 300px;
+            margin-left: 30px;
+            background: #afd9ee;
+            border: 1px solid #ebebeb;
+            border-radius: 4px;
+            border-shadow: 0 0 0 8px;
+            -webkit-border-shadow: 0 0 0 8px;
+            background: url(images/slot.jpg) repeat-y;
+            background-size: 300% 100%;
+            background-position: 3px 0;
+            /*animation-name:scroll;*/
+            animation-duration:0.2s;
+            animation-iteration-count:10;
+        }
+        .content .sel-slot{
+            width: 100%;
+            height: 100px;
+            position: absolute;
+            top: 117px;
+            padding: 5px 0px;
+            background-color: rgba(255,0,0,0.2);
+
+        }
+        button{
+            width: 280px;
+            height: 50px;
+            margin: 20px 85px;
+            border: none;
+            outline: none;
+            pointer: cursor;
+            webkit-appearance: none;
+            background: #afd9ee;
+            font-size:24px;
+        }
+        p{
+            width: 410px;
+            margin: 0 auto;
+            height: 50px;
+            color: #000;
+            font-size: 28px;
+            font-family: "微软雅黑";
+            line-height: 20px;
+            padding: 20px;
+            /* min-height: 150px; */
+            background: #c0c0c0;
+
+        }
+    </style>
+</head>
+<body>
+
+   <h1 class="title">老虎机小游戏</h1>
+   <div class="content">
+       <div class="slot"></div>
+       <div class="slot"></div>
+       <div class="slot"></div>
+       <div class="sel-slot"></div>
+       <button>go</button>
+       <p></p>
+   </div>
+
+   <script src="js/jquery-1.11.1.min.js"></script>
+   <script type="text/javascript">
+       function setslot(){
+            var rans=[];
+            var images=["//i.imgur.com/9H17QFk.png", "//i.imgur.com/9RmpXTy.png", "//i.imgur.com/VJnmtt5.png"];
+            for(var i in $(".slot")){
+                var ran=Math.floor(Math.random()*3);
+                rans.push(ran+1);
+                 $(".slot").eq(i).css("background-position","3px "+100*(ran+1)+"px");
+            }
+            if(rans[0]==rans[1]&&rans[0]==rans[2]){
+                setTimeout(function(){
+                    $("p").html("you win hahaha!");
+                },2000);
+
+                return rans[0];
+            }
+            if(rans[0]!=undefined&&rans[1]!=undefined&&rans[2]!=undefined){
+                setTimeout(function(){
+                    $("p").html(rans[0]+' '+rans[1]+' '+ rans[2]+' '+"you lose so sorry!");
+                },2000);
+
+            }
+            return null;
+       }
+       $(document).ready(function(){
+           $("button").click(function(){
+               setslot();
+               $(".slot").css("animation-name","scroll");
+               setTimeout(function(){
+                   $(".slot").css("animation-name","");
+               },2000)
+           });
+
+       });
+   </script>
+</body>
+</html>
