@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>日历小组件</title>
+    <style type="text/css">
+        *{
+            margin:0;
+            padding:0;
+        }
+        ul li{
+            list-style-type:none;
+        }
+        .green{
+            color:#6ac13c;
+        }
+       
+        .lightgray{
+            color:#a8a8a8;
+        }
+        .darkgray{
+            color:#565656;
+        }
+        .greenbox{
+            border:1px solid #6ac13c;
+            background:#e9f8df;
+        }
+        .calender{
+            width:450px;
+            height:350px;
+            padding:10px;
+            margin:0 auto;
+            margin-top:60px;
+            background:#ccc;
+             
+        }
+        .calender .content{
+            width:100%;
+            height:100%;
+            background:#fff;
+            box-shadow:0px 1px 1px rgba(0,0,0,0.1);
+             
+        }
+        .head{
+            width:100%;
+            height:60px;
+            border-bottom:1px solid #ebebeb;
+            position:relative;
+        }
+        .head h1{
+            font-size:20px;
+            font-family:"微软雅黑";
+            text-align:center;
+            line-height:20px;
+            padding-top: 10px;
+        }
+        .head p{
+            font-size:14px;
+            font-family:"微软雅黑";
+            text-align:center;
+            line-height:14px;
+            margin-top:5px;
+        }
+        .head img{
+            width:15px;
+            height:25px;
+        }
+        .head .prev{
+            position:absolute;
+            top:22.5px;
+            left:5%;
+        }
+        .head .next{
+            position:absolute;
+            top:22.5px;
+            right:5%;
+        }
+
+        .weeklist{
+            width:100%;
+            height:35px;
+        }
+        .weeklist ul{
+            width:90%;
+            margin:0 auto;
+            height:100%;
+            display:flex;
+            -webkit-display:flex;
+        }
+        .weeklist ul li{
+            flex:1;
+            line-height:35px;
+            text-align:center;
+            font-size:18px;
+        }
+        .daylist{
+            width:100%;
+            height:auto;
+        }
+        .daylist ul{
+            width:90%;
+            margin:0 auto;
+        }
+        .daylist ul li{
+            width:14.28%;
+            float:left;
+            height:35px;
+            line-height:35px;
+            text-align:center;
+            font-size:18px;
+            box-sizing:border-box;
+        }
+         /* 响应式布局 */
+
+        @media (max-width: 768px) {
+            .calender{
+                width:70%;
+            }
+            .weeklist ul li{
+                font-size:14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="calender">
+        <div class="content">
+            <div class="head">
+                <h1 class="green" id="month">month</h1>
+                <p  class="green" id="year">year</p>
+                <img class="prev darkgrey" id="prev" src="images/arrow-l.png"/>
+                <img class="next darkgrey" id="next" src="images/arrow-r.png"/> 
+            </div>
+            <div class="weeklist">
+                <ul>
+                    <li class="darkgray">mon</li>
+                    <li class="darkgray">tue</li>
+                    <li class="darkgray">wed</li>
+                    <li class="darkgray">thu</li>
+                    <li class="darkgray">fri</li>
+                    <li class="darkgray">sat</li>
+                    <li class="darkgray">sun</li>
+                </ul>
+            </div>
+            <div class="daylist">
+                <ul id="day">
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        window.onload=function(){
+            //定义月份的天数变量
+            var months_name=["january","febrary","march","april","may","june","july","auguest","september","october","november","december"];
+            var months_normal=[31,28,31,30,31,30,31,31,30,31,30,31];
+            var months_olympic=[31,29,31,30,31,30,31,31,30,31,30,31];
+            //获取要进行改变的元素
+            var prev=document.getElementById("prev");
+            var next=document.getElementById("next");
+            var month=document.getElementById("month");
+            var year=document.getElementById("year");
+            var daypanel=document.getElementById("day");
+            var date=new Date();
+            var curyear=date.getFullYear();
+            var curmonth=date.getMonth();
+            var curday=date.getDate();
+            //首先获取某年某月第一天是星期几
+            var getfirstday=function(year,month){
+                var firstdate=new Date(year,month,1);
+                var firstday=firstdate.getDay();
+                if(firstday==0){
+                    firstday==7;
+                }
+                return firstday;
+            }
+            //定义一个函数获取月份的所有天数
+            var getallday=function(year,month){
+                if(year%400==0||(year%4==0)&&(year%100!=0)){
+                    return months_olympic[month];
+
+                }else{
+                    return months_normal[month];
+                }
+            }
+            //定义一个函数填充月份的天数
+            function refreshday(){
+                var str="";
+                var myclass;
+                var start=getfirstday(curyear,curmonth);
+                var all=getallday(curyear,curmonth);
+                for(var i=1;i<start;i++){
+                    str+="<li></li>";
+                }
+                for(var i=1;i<=all;i++){
+                    //小于今天的日子颜色为浅灰色
+                    if(curyear==date.getFullYear()&&curmonth==date.getMonth()&&i<date.getDate()||curyear==date.getFullYear()&&curmonth<date.getMonth()||curyear<date.getFullYear()){
+                        myclass="lightgray";
+                    }else if(curyear==date.getFullYear()&&curmonth==date.getMonth()&&i==date.getDate()){
+                        //日子等于今天设置为背景颜色和边框
+                        myclass="darkgray greenbox";
+                    }else{
+                        //日子大于今天设置为深灰
+                        myclass="darkgray";
+                    }
+                    str+="<li class='"+myclass+"'>"+i+"</li>"
+                }
+                daypanel.innerHTML=str;
+                year.innerHTML=curyear;
+                month.innerHTML=months_name[curmonth];
+            }
+            refreshday();
+            prev.onclick=function(){
+                curmonth--;
+                //月份减一，如果小于零，年份减一，月份从12月开始
+                if(curmonth<0){
+                    curyear--;
+                    curmonth=11;
+                }
+
+                refreshday();
+            }
+            next.onclick=function(){
+                curmonth++;
+                //月份加一，如果大于12，年份加一，月份从1月开始
+                if(curmonth>11){
+                    curyear++;
+                    curmonth=0;
+                }
+                refreshday();
+            }
+        }
+    </script>
+</body>
+</html>
